@@ -1,0 +1,20 @@
+---
+- name: Ansible Playbooks
+  hosts: all
+
+  tasks:
+    - name: Copy file
+      ansible.builtin.copy:
+        src: ./hosts
+        dest: /tmp/hosts_backup
+        mode: "0644"
+    - name: Add 'joe'
+      ansible.builtin.user:
+        name: joe
+      become: yes
+      become_method: sudo
+    - name: Upgrade packages
+      apt:
+        force_apt_get: yes
+        upgrade: dist
+      become: yes
