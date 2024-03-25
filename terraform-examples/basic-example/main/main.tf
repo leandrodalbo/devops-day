@@ -13,8 +13,7 @@ terraform {
   }
 }
 provider "aws" {
-  region = "eu-west-1"
-
+  region = var.aws_region
 }
 
 # VPC - Using default
@@ -49,8 +48,8 @@ resource "aws_security_group_rule" "http_inbound_ec2" {
 
 # EC2 Instances
 resource "aws_instance" "machine_0" {
-  ami             = "ami-0c1c30571d2dae5c9"
-  instance_type   = "t2.micro"
+  ami             = var.ami
+  instance_type   = var.instance_type
   security_groups = [aws_security_group.ec2-security-group.name]
   user_data       = <<-EOF
               #!/bin/bash
@@ -60,8 +59,8 @@ resource "aws_instance" "machine_0" {
 }
 
 resource "aws_instance" "machine_1" {
-  ami             = "ami-0c1c30571d2dae5c9"
-  instance_type   = "t2.micro"
+  ami             = var.ami
+  instance_type   = var.instance_type
   security_groups = [aws_security_group.ec2-security-group.name]
   user_data       = <<-EOF
               #!/bin/bash
