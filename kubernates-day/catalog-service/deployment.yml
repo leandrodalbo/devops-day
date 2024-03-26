@@ -29,3 +29,5 @@ spec:
               value: jdbc:postgresql://catalog-postgres/catalog
             - name: SPRING_CLOUD_CONFIG_URI
               value: http://catalog-config
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod

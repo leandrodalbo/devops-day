@@ -42,12 +42,12 @@ $ kubectl get deployments
 ```bash
 $ kubectl apply -f config-service/service.yml
 $ kubectl apply -f catalog-service/service.yml
-$ kubectl get deployments
+$ kubectl get services
 ```
 
 # expose app
 
 ```bash
-$ kubectl port-forward service/catalog-service 9001:80
+$ kubectl port-forward service/catalog-service 8080:80
 $ curl http://127.0.0.1:8080/welcome
 ```
