@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-config
+  labels:
+    app: catalog-config
+spec:
+  type: ClusterIP
+  selector:
+    app: catalog-config
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8087

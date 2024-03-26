@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-postgres
+  labels:
+    db: catalog-postgres
+spec:
+  selector:
+    matchLabels:
+      db: catalog-postgres
+  template:
+    metadata:
+      labels:
+        db: catalog-postgres
+    spec:
+      containers:
+        - name: catalogdb
+          image: postgres:14.10
+          env:
+            - name: POSTGRES_USER
+              value: user
+            - name: POSTGRES_PASSWORD
+              value: password
+            - name: POSTGRES_DB
+              value: catalog
+          resources:
+            requests:
+              cpu: 100m
+              memory: 60Mi
+            limits:
+              cpu: 200m
+              memory: 120Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-postgres
+  labels:
+    db: catalog-postgres
+spec:
+  type: ClusterIP
+  selector:
+    db: catalog-postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

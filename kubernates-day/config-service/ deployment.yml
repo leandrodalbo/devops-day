@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-config
+  labels:
+    app: catalog-config
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: catalog-config
+  template:
+    metadata:
+      labels:
+        app: catalog-config
+    spec:
+      containers:
+        - name: catalog-config
+          image: ghcr.io/leandrodalbo/catalog-config:latest
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 5"]
+          ports:
+            - containerPort: 8087
+          env:
+            - name: BPL_JVM_THREAD_COUNT
+              value: "50"
