@@ -32,8 +32,8 @@ $ kubectl get pod
 # create deployments
 
 ```bash
-$ kubectl apply -f config-service/\ deployment.yml
-$ kubectl apply -f catalog-service/\ deployment.yml
+$ kubectl apply -f config-service/deployment.yml
+$ kubectl apply -f catalog-service/deployment.yml
 $ kubectl get deployments
 ```
 
