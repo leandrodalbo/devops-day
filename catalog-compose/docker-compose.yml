@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  catalog:
+    depends_on:
+      - catalog-config
+      - catalogdb
+    image: ghcr.io/leandrodalbo/catalog:latest
+    container_name: "catalog"
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://catalogdb:5432/catalog
+
+  catalog-config:
+    image: ghcr.io/leandrodalbo/catalog-config:latest
+    container_name: "catalog-config"
+    ports:
+      - 8087:8087
+
+  catalogdb:
+    image: "postgres:14.4"
+    container_name: "catalogdb"
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
