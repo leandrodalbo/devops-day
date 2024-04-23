@@ -28,3 +28,19 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  purchase:
+    depends_on:
+      - catalog
+      - catalogdb
+    image: ghcr.io/leandrodalbo/purchase-service:latest
+    container_name: "purchase"
+    ports:
+      - 8183:8183
+    environment:
+      - SPRING_R2DBC_URL=r2dbc:postgresql://catalogdb:5432/orders
+      - SPRING_R2DBC_USERNAME=user
+      - SPRING_R2DBC_PASSWORD=password
+      - SPRING_FLYWAY_URL=jdbc:postgresql://catalogdb:5432/orders
+      - SPRING_FLYWAY_USER=user
+      - SPRING_FLYWAY_PASSWORD=password
+      - CATALOG_ENDPOINT-URI=http://catalog:8080
