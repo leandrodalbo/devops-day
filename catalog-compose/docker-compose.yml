@@ -44,3 +44,8 @@ services:
       - SPRING_FLYWAY_USER=user
       - SPRING_FLYWAY_PASSWORD=password
       - CATALOG_ENDPOINT-URI=http://catalog:8080
+  redis-service:
+    image: "redis:7.0"
+    container_name: "catalog-redis"
+    ports:
+      - 6379:6379
