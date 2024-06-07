@@ -1,6 +1,19 @@
 version: "3.8"
 
 services:
+  catalog-gateway:
+    depends_on:
+      - catalog
+      - purchase
+      - catalog-redis
+    image: ghcr.io/leandrodalbo/catalog-gateway:latest
+    container_name: "catalog-gateway"
+    ports:
+      - 9000:9000
+    environment:
+      - SPRING_DATA_REDIS_HOST=catalog-redis
+      - PURCHASE_SERVICE_URL=http://purchase:8183
+      - CATALOG_SERVICE_URL=http://catalog:8080
   catalog:
     depends_on:
       - catalog-config
@@ -44,7 +57,7 @@ services:
       - SPRING_FLYWAY_USER=user
       - SPRING_FLYWAY_PASSWORD=password
       - CATALOG_ENDPOINT-URI=http://catalog:8080
-  redis-service:
+  catalog-redis:
     image: "redis:7.0"
     container_name: "catalog-redis"
     ports:
