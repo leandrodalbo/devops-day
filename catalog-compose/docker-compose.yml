@@ -62,3 +62,11 @@ services:
     container_name: "catalog-redis"
     ports:
       - 6379:6379
+  catalog-rabbit:
+    image: "rabbitmq:3.10-management"
+    container_name: "catalog-rabbit"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
