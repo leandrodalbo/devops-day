@@ -57,6 +57,10 @@ services:
       - SPRING_FLYWAY_USER=user
       - SPRING_FLYWAY_PASSWORD=password
       - CATALOG_ENDPOINT-URI=http://catalog:8080
+      - SPRING_RABBITMQ_HOST=catalog-rabbit
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=user
+      - SPRING_RABBITMQ_PASSWORD=password
   catalog-redis:
     image: "redis:7.0"
     container_name: "catalog-redis"
