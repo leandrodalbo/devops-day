@@ -1,19 +1,19 @@
 version: "3.8"
 
 services:
-  catalog-gateway:
-    depends_on:
-      - catalog
-      - purchase
-      - catalog-redis
-    image: ghcr.io/leandrodalbo/catalog-gateway:latest
-    container_name: "catalog-gateway"
-    ports:
-      - 9000:9000
-    environment:
-      - SPRING_DATA_REDIS_HOST=catalog-redis
-      - PURCHASE_SERVICE_URL=http://purchase:8183
-      - CATALOG_SERVICE_URL=http://catalog:8080
+  #catalog-gateway:
+  #  depends_on:
+  #    - catalog
+  #    - purchase
+  #    - catalog-redis
+  #  image: ghcr.io/leandrodalbo/catalog-gateway:latest
+  #  container_name: "catalog-gateway"
+  #  ports:
+  #    - 9000:9000
+  #  environment:
+  #    - SPRING_DATA_REDIS_HOST=catalog-redis
+  #    - PURCHASE_SERVICE_URL=http://purchase:8183
+  #    - CATALOG_SERVICE_URL=http://catalog:8080
   catalog:
     depends_on:
       - catalog-config
@@ -61,6 +61,17 @@ services:
       - SPRING_RABBITMQ_PORT=5672
       - SPRING_RABBITMQ_USERNAME=user
       - SPRING_RABBITMQ_PASSWORD=password
+  keycloak-service:
+    image: "quay.io/keycloak/keycloak:19.0"
+    container_name: "keycloak"
+    command: start-dev --import-realm
+    volumes:
+      - ./keycloak.json:/opt/keycloak/data/import/keycloak.json
+    environment:
+      - KEYCLOAK_ADMIN=user
+      - KEYCLOAK_ADMIN_PASSWORD=password
+    ports:
+      - 8091:8080
   catalog-redis:
     image: "redis:7.0"
     container_name: "catalog-redis"
