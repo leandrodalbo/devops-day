@@ -1,1 +1,1 @@
-# Exploratopm repo
+# Exploration repo
